@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 public class Hangman extends Application{
 
-	BorderPane rootPane;
+	public static BorderPane rootPane;
 	
 	public static Stage stage;
 	public static Scene scene;

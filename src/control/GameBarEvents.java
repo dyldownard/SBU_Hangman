@@ -10,11 +10,14 @@ import java.io.ObjectOutputStream;
 import java.util.Optional;
 import java.util.Scanner;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import model.GameState;
@@ -74,24 +77,34 @@ public final class GameBarEvents {
 					return;
 				}
 			}
-			GameState gs;
-			try {
-				gs = new GameState(getRandomWord());
-			} catch (FileNotFoundException e1) {
-				System.out.println("hi");
-				gs = new GameState("Hello");
-			}
-			Hangman.gc = new GameController(gs);
-			Hangman.hangman = new HangmanView();
-			KeyboardView upper = Hangman.gc.kViewCorrect;
-			KeyboardView kv = Hangman.gc.kViewLeft;
-			Hangman.remaining = new Label();
-			Hangman.remaining.setText("Guesses Remaining: 10");
 			
-			Hangman.vbox.getChildren().clear();
-			Hangman.hbox.getChildren().clear();
-			Hangman.vbox.getChildren().addAll(Hangman.remaining, upper,kv);
-			Hangman.hbox.getChildren().addAll(Hangman.hangman,Hangman.vbox);
+			
+			Button bt = new Button("Start Playing");
+			bt.setOnMouseClicked(e1 -> {
+				GameState gs;
+				try {
+					gs = new GameState(getRandomWord());
+				} catch (FileNotFoundException e2) {
+					System.out.println("hi");
+					gs = new GameState("Hello");
+				}
+				Hangman.gc = new GameController(gs);
+				Hangman.hangman = new HangmanView();
+				KeyboardView upper = Hangman.gc.kViewCorrect;
+				KeyboardView kv = Hangman.gc.kViewLeft;
+				Hangman.remaining = new Label();
+				Hangman.remaining.setText("Guesses Remaining: 10");
+				
+				Hangman.vbox.getChildren().clear();
+				Hangman.hbox.getChildren().clear();
+				Hangman.vbox.getChildren().addAll(Hangman.remaining, upper,kv);
+				VBox vb = new VBox(Hangman.hangman);
+				vb.setAlignment(Pos.CENTER);
+				Hangman.hbox.getChildren().addAll(vb,Hangman.vbox);
+				Hangman.rootPane.setCenter(Hangman.hbox);
+			});
+			Hangman.rootPane.setCenter(bt);
+			
 		});
 	}
 	
@@ -151,22 +164,31 @@ public final class GameBarEvents {
 			File hangFile = fc.showOpenDialog(Hangman.stage);
 			try {
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(hangFile));
-				GameState newGS = (GameState) ois.readObject();
-				Hangman.gc = new GameController(newGS);
-				Hangman.hangman = new HangmanView();
-				KeyboardView upper = Hangman.gc.kViewCorrect;
-				KeyboardView kv = Hangman.gc.kViewLeft;
-				for (int i = 0; i < Hangman.gc.currentState.getAmountWrong(); i++) {
-					Hangman.hangman.advanceGame();
-				}
-				Hangman.remaining = new Label();
-				Hangman.remaining.setText("Guesses Remaining: " + (10- Hangman.gc.currentState.getAmountWrong()));
 				
-				Hangman.vbox.getChildren().clear();
-				Hangman.hbox.getChildren().clear();
-				Hangman.vbox.getChildren().addAll(Hangman.remaining, upper,kv);
-				Hangman.hbox.getChildren().addAll(Hangman.hangman,Hangman.vbox);
+				GameState newGS = (GameState) ois.readObject();
 				ois.close();
+				Button bt = new Button("Start Playing");
+				bt.setOnMouseClicked(e1 -> {
+					Hangman.gc = new GameController(newGS);
+					Hangman.hangman = new HangmanView();
+					KeyboardView upper = Hangman.gc.kViewCorrect;
+					KeyboardView kv = Hangman.gc.kViewLeft;
+					for (int i = 0; i < Hangman.gc.currentState.getAmountWrong(); i++) {
+						Hangman.hangman.advanceGame();
+					}
+					Hangman.remaining = new Label();
+					Hangman.remaining.setText("Guesses Remaining: " + (10- Hangman.gc.currentState.getAmountWrong()));
+					
+					Hangman.vbox.getChildren().clear();
+					Hangman.hbox.getChildren().clear();
+					Hangman.vbox.getChildren().addAll(Hangman.remaining, upper,kv);
+					VBox vb = new VBox(Hangman.hangman);
+					vb.setAlignment(Pos.CENTER);
+					Hangman.hbox.getChildren().addAll(vb,Hangman.vbox);
+					Hangman.rootPane.setCenter(Hangman.hbox);
+					Hangman.gBar.disallowSave();
+				});
+				Hangman.rootPane.setCenter(bt);
 				Hangman.gBar.disallowSave();
 			} catch (FileNotFoundException e1) {
 				System.out.println("exited filechooser");

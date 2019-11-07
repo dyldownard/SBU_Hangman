@@ -65,7 +65,7 @@ public class GameBar extends Pane {
 		exit.setPreserveRatio(true);
 		
 		
-		hbox.getChildren().addAll(start,save,load,exit);
+		hbox.getChildren().addAll(start,load,save,exit);
 		this.getChildren().add(hbox);
 		
 		

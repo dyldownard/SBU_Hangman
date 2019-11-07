@@ -48,7 +48,6 @@ public final class GameBarEvents {
 	 * @param start - ImageView that will act as the start button
 	 */
 	private static void startEvent(ImageView start) {
-		//TODO set up word generator
 		start.setOnMouseClicked(e -> {
 			if (ableSave) {
 				Alert saveAlert = new Alert(AlertType.WARNING,"Game in progress. Would you like to save?", ButtonType.NO, ButtonType.CANCEL, ButtonType.OK);
@@ -148,7 +147,7 @@ public final class GameBarEvents {
 				}
 			}
 			FileChooser fc = new FileChooser();
-			fc.setSelectedExtensionFilter(new ExtensionFilter("Hangman files (*.hng)", "*.hng"));
+			fc.getExtensionFilters().add(new ExtensionFilter("Hangman files (*.hng)", "*.hng"));
 			File hangFile = fc.showOpenDialog(Hangman.stage);
 			try {
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(hangFile));

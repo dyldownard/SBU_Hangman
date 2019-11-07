@@ -2,11 +2,16 @@ package control;
 
 import javafx.scene.image.ImageView;
 
+/**
+ * Events class that allows the GameBar's buttons to be set to Modular Events
+ * @author Dylan T. Downard
+ * 
+ */
 public final class GameBarEvents {
 	
-	@Deprecated
+	
+	
 	public GameBarEvents(ImageView start, ImageView save, ImageView load, ImageView exit) {
-		System.out.println("NOTE: GameBarEvents should not be instanced. Use setEvents(..) instead of the constructor.");
 		setEvents(start,save,load,exit);
 	}
 	
@@ -18,10 +23,14 @@ public final class GameBarEvents {
 		exitEvent(exit);
 	}
 	
-	
+	/**
+	 * 
+	 * @param start - ImageView that will act as the start button
+	 */
 	private static void startEvent(ImageView start) {
 		
 	}
+	
 	private static void saveEvent(ImageView save) {
 		
 	}

@@ -4,7 +4,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import model.GameState;
-import view.App;
+import view.Hangman;
 import view.KeyboardView;
 /**
  * Handles all user-game interaction in the form of setting up events and handling view elements.
@@ -28,13 +28,13 @@ public class GameController {
 		kViewLeft = new KeyboardView(charactersLeft);
 		kViewCorrect = new KeyboardView(charactersCorrect);
 		gameInProgress = true;
-		App.gBar.allowSave();
+		Hangman.gBar.allowSave();
 	}
 
 	
 	private void setCharacterEvents() {
 		CharacterEvents.setLabelsEvents(charactersLeft);
-		CharacterEvents.setKeyEvents(App.scene);
+		CharacterEvents.setKeyEvents(Hangman.scene);
 	}
 
 	/**
@@ -47,10 +47,10 @@ public class GameController {
 		kViewLeft.setKeys(charactersLeft);
 		kViewCorrect.setKeys(charactersCorrect);
 		CharacterEvents.setLabelsEvents(charactersLeft);
-		App.remaining.setText("Guesses Remaining: " + (10 - currentState.getAmountWrong()));
+		Hangman.remaining.setText("Guesses Remaining: " + (10 - currentState.getAmountWrong()));
 		
 		if (currentState.isGameLost()) {
-			App.gBar.disallowSave();
+			Hangman.gBar.disallowSave();
 			this.gameInProgress = false;
 			kViewCorrect.setKeys(currentState.getCharactersCorrectLoss());
 			Alert loss = new Alert(AlertType.WARNING);
@@ -62,7 +62,7 @@ public class GameController {
 			
 		} else if (currentState.isGameWon()) {
 			//TODO
-			App.gBar.disallowSave();
+			Hangman.gBar.disallowSave();
 			this.gameInProgress = false;
 			kViewCorrect.setKeys(currentState.getCharactersCorrectWin());
 			Alert won = new Alert(AlertType.INFORMATION);

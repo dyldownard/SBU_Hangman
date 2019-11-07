@@ -18,8 +18,8 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import model.GameState;
-import view.App;
 import view.Hangman;
+import view.HangmanView;
 import view.KeyboardView;
 
 /**
@@ -59,12 +59,12 @@ public final class GameBarEvents {
 				if (buttons.get() == ButtonType.OK) {
 					FileChooser fc = new FileChooser();
 					fc.getExtensionFilters().add(new ExtensionFilter("Hangman files (*.hng)", "*.hng"));
-					File hangFile = fc.showSaveDialog(App.stage);
+					File hangFile = fc.showSaveDialog(Hangman.stage);
 					try {
 						ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
-						oos.writeObject(App.gc.currentState);
+						oos.writeObject(Hangman.gc.currentState);
 						oos.close();
-						App.gBar.disallowSave();
+						Hangman.gBar.disallowSave();
 					} catch (FileNotFoundException e1) {
 						System.out.println("exited filechooser");
 					} catch (IOException e1) {
@@ -82,17 +82,17 @@ public final class GameBarEvents {
 				System.out.println("hi");
 				gs = new GameState("Hello");
 			}
-			App.gc = new GameController(gs);
-			App.hangman = new Hangman();
-			KeyboardView upper = App.gc.kViewCorrect;
-			KeyboardView kv = App.gc.kViewLeft;
-			App.remaining = new Label();
-			App.remaining.setText("Guesses Remaining: 10");
+			Hangman.gc = new GameController(gs);
+			Hangman.hangman = new HangmanView();
+			KeyboardView upper = Hangman.gc.kViewCorrect;
+			KeyboardView kv = Hangman.gc.kViewLeft;
+			Hangman.remaining = new Label();
+			Hangman.remaining.setText("Guesses Remaining: 10");
 			
-			App.vbox.getChildren().clear();
-			App.hbox.getChildren().clear();
-			App.vbox.getChildren().addAll(App.remaining, upper,kv);
-			App.hbox.getChildren().addAll(App.hangman,App.vbox);
+			Hangman.vbox.getChildren().clear();
+			Hangman.hbox.getChildren().clear();
+			Hangman.vbox.getChildren().addAll(Hangman.remaining, upper,kv);
+			Hangman.hbox.getChildren().addAll(Hangman.hangman,Hangman.vbox);
 		});
 	}
 	
@@ -101,16 +101,18 @@ public final class GameBarEvents {
 			if (ableSave) {
 				FileChooser fc = new FileChooser();
 				fc.getExtensionFilters().add(new ExtensionFilter("Hangman files (*.hng)", "*.hng"));
-				File hangFile = fc.showSaveDialog(App.stage);
+				File hangFile = fc.showSaveDialog(Hangman.stage);
 				try {
 					ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
-					oos.writeObject(App.gc.currentState);
+					oos.writeObject(Hangman.gc.currentState);
 					oos.close();
-					App.gBar.disallowSave();
+					Hangman.gBar.disallowSave();
 				} catch (FileNotFoundException e1) {
 					System.out.println("exited filechooser");
 				} catch (IOException e1) {
 					e1.printStackTrace();
+				}catch (NullPointerException e1) {
+					System.out.println("no choice taken");
 				}
 			}
 		});
@@ -127,16 +129,18 @@ public final class GameBarEvents {
 				if (buttons.get() == ButtonType.OK) {
 					FileChooser fc = new FileChooser();
 					fc.getExtensionFilters().add(new ExtensionFilter("Hangman files (*.hng)", "*.hng"));
-					File hangFile = fc.showSaveDialog(App.stage);
+					File hangFile = fc.showSaveDialog(Hangman.stage);
 					try {
 						ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
-						oos.writeObject(App.gc.currentState);
+						oos.writeObject(Hangman.gc.currentState);
 						oos.close();
-						App.gBar.disallowSave();
+						Hangman.gBar.disallowSave();
 					} catch (FileNotFoundException e1) {
 						System.out.println("exited filechooser");
 					} catch (IOException e1) {
 						e1.printStackTrace();
+					}catch (NullPointerException e1) {
+						System.out.println("no choice taken");
 					}
 					
 				}else if (buttons.get() == ButtonType.CANCEL) {
@@ -145,30 +149,32 @@ public final class GameBarEvents {
 			}
 			FileChooser fc = new FileChooser();
 			fc.setSelectedExtensionFilter(new ExtensionFilter("Hangman files (*.hng)", "*.hng"));
-			File hangFile = fc.showOpenDialog(App.stage);
+			File hangFile = fc.showOpenDialog(Hangman.stage);
 			try {
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(hangFile));
 				GameState newGS = (GameState) ois.readObject();
-				App.gc = new GameController(newGS);
-				App.hangman = new Hangman();
-				KeyboardView upper = App.gc.kViewCorrect;
-				KeyboardView kv = App.gc.kViewLeft;
+				Hangman.gc = new GameController(newGS);
+				Hangman.hangman = new HangmanView();
+				KeyboardView upper = Hangman.gc.kViewCorrect;
+				KeyboardView kv = Hangman.gc.kViewLeft;
 				
-				App.remaining = new Label();
-				App.remaining.setText("Guesses Remaining: " + (10- App.gc.currentState.getAmountWrong()));
+				Hangman.remaining = new Label();
+				Hangman.remaining.setText("Guesses Remaining: " + (10- Hangman.gc.currentState.getAmountWrong()));
 				
-				App.vbox.getChildren().clear();
-				App.hbox.getChildren().clear();
-				App.vbox.getChildren().addAll(upper,kv);
-				App.hbox.getChildren().addAll(App.hangman,App.vbox);
+				Hangman.vbox.getChildren().clear();
+				Hangman.hbox.getChildren().clear();
+				Hangman.vbox.getChildren().addAll(upper,kv);
+				Hangman.hbox.getChildren().addAll(Hangman.hangman,Hangman.vbox);
 				ois.close();
-				App.gBar.disallowSave();
+				Hangman.gBar.disallowSave();
 			} catch (FileNotFoundException e1) {
 				System.out.println("exited filechooser");
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			} catch (ClassNotFoundException e1) {
 				e1.printStackTrace();
+			} catch (NullPointerException e1) {
+				System.out.println("no choice taken");
 			}
 		});
 	}
@@ -183,20 +189,22 @@ public final class GameBarEvents {
 				if (buttons.get() == ButtonType.OK) {
 					FileChooser fc = new FileChooser();
 					fc.getExtensionFilters().add(new ExtensionFilter("Hangman files (*.hng)", "*.hng"));
-					File hangFile = fc.showSaveDialog(App.stage);
+					File hangFile = fc.showSaveDialog(Hangman.stage);
 					try {
 						ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
-						oos.writeObject(App.gc.currentState);
+						oos.writeObject(Hangman.gc.currentState);
 						oos.close();
-						App.gBar.disallowSave();
+						Hangman.gBar.disallowSave();
 					} catch (FileNotFoundException e1) {
 						System.out.println("exited filechooser");
 					} catch (IOException e1) {
 						e1.printStackTrace();
+					}catch (NullPointerException e1) {
+						System.out.println("no choice taken");
 					}
 					System.exit(0);
 				}else if (buttons.get() == ButtonType.NO) {
-					App.stage.close();
+					Hangman.stage.close();
 					System.exit(0);
 				}
 			}else {

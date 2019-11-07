@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Border;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import view.App;
+import view.Hangman;
 
 /**
  * All game information. Able to be exported safely.
@@ -37,7 +37,7 @@ public class GameState implements Serializable{
 		int spot = getValue(C);
 		if (guessedCharacters[spot]==false) {
 			guessedCharacters[spot] = true;
-			App.gBar.allowSave();
+			Hangman.gBar.allowSave();
 			//guessed character is available, see what the answer is
 			if (getOccurances(WORD, C) > 0) {
 				correct(C);
@@ -55,14 +55,14 @@ public class GameState implements Serializable{
 				charactersCorrect[i] = true;
 			}
 		}
-		App.gc.update();
+		Hangman.gc.update();
 	}
 	
 	
 	public void incorrect(char C) {
 		amountWrong++;
-		App.hangman.advanceGame();
-		App.gc.update();
+		Hangman.hangman.advanceGame();
+		Hangman.gc.update();
 	}
 	
 	/**

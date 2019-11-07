@@ -44,6 +44,18 @@ public final class GameBarEvents {
 		saveEvent(save);
 		loadEvent(load);
 		exitEvent(exit);
+		setHover(start,save,load,exit);
+	}
+	
+	private static void setHover(ImageView... views) {
+		for (ImageView view : views) {
+			view.setOnMouseEntered(e -> {
+				view.setStyle("-fx-border-color: white");
+			});
+			view.setOnMouseExited(e -> {
+				view.setStyle("-fx-border-color: none");
+			});
+		}
 	}
 	
 	/**

@@ -46,7 +46,7 @@ public class Hangman extends Application{
 		
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Hangman");
-		primaryStage.getIcons().add(new Image("/resources/Exit.png"));
+		primaryStage.getIcons().add(new Image("/resources/Hang.png"));
 		primaryStage.show();
 	}
 	

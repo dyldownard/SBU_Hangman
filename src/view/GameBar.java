@@ -40,7 +40,7 @@ public class GameBar extends Pane {
 		
 		start = new ImageView();
 		start.setImage(getImage("New"));
-		Tooltip.install(start, new Tooltip("Start"));
+		Tooltip.install(start, new Tooltip("New"));
 		start.setFitHeight(50);
 		start.setPreserveRatio(true);
 		

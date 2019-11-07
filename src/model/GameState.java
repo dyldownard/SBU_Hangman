@@ -9,7 +9,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import view.App;
 
-
+/**
+ * All game information. Able to be exported safely.
+ * @author Dylan T. Downard
+ *
+ */
 public class GameState {
 	
 	private String WORD;
@@ -18,11 +22,10 @@ public class GameState {
 	private final int MAX_WRONG = 10;
 	private boolean[] guessedCharacters;
 
-	
 	public GameState(String word) {
 		this.WORD = word;
 		this.amountWrong = 0;
-		guessedCharacters = new boolean[26];	//automatically 26 falses
+		guessedCharacters = new boolean[26];
 		charactersCorrect = new boolean[WORD.length()];
 	}
 	
@@ -54,8 +57,10 @@ public class GameState {
 	
 	public void incorrect(char C) {
 		amountWrong++;
+		App.hangman.advanceGame();
 		App.gc.update();
 	}
+	
 	/**
 	 * Takes in Character C, and based off of alphabetic position, returns 0-26. 
 	 * Treats upper and lower cases the same.
@@ -73,7 +78,12 @@ public class GameState {
 		}
 		return (C-65);
 	}
-	
+	/**
+	 * Utility method to get the amount of times a character C shows up in String word
+	 * @param word - Word to check
+	 * @param C - Character to check for
+	 * @return amount of times C exists in word
+	 */
 	private int getOccurances(String word, char C) {
 		int occ = 0;
 		
@@ -84,7 +94,10 @@ public class GameState {
 		}
 		return occ;
 	}
-	
+	/**
+	 * Gets the Label(s) for all of the Characters in the Word area
+	 * @return Label[] of the Guessed Correctly characters
+	 */
 	public Label[] getCharactersCorrect() {
 		Label[] labels = new Label[WORD.length()];
 		for (int i = 0; i < labels.length; i++) {
@@ -94,6 +107,7 @@ public class GameState {
 			}else {
 				labels[i].setText(" ");
 			}
+			labels[i].setStyle("-fx-border-color: black");
 			labels[i].setPrefWidth(25);
 			labels[i].setAlignment(Pos.CENTER);
 			labels[i].setFont(new Font(20));
@@ -101,7 +115,31 @@ public class GameState {
 		}
 		return labels;
 	}
-	
+	/**
+	 * Gets the Label(s) for all of the Characters in the Word area with Green backgrounds
+	 * @return Label[] of the Guessed Correctly characters with Green backgrounds
+	 */
+	public Label[] getCharactersCorrectWin() {
+		Label[] labels = new Label[WORD.length()];
+		for (int i = 0; i < labels.length; i++) {
+			labels[i] = new Label();
+			if (charactersCorrect[i] == true) {
+				labels[i].setText((char) WORD.charAt(i) + "");
+			}else {
+				labels[i].setText(" ");
+			}
+			labels[i].setStyle("-fx-background-color: #00FF7F");
+			labels[i].setPrefWidth(25);
+			labels[i].setAlignment(Pos.CENTER);
+			labels[i].setFont(new Font(20));
+			labels[i].setBorder(Border.EMPTY);
+		}
+		return labels;
+	}
+	/**
+	 * Gets the Label(s) for all of the Characters in the Word area, specifically filling in those that were not guessed
+	 * @return Label[] of the Guessed and Unguessed Word
+	 */
 	public Label[] getCharactersCorrectLoss() {
 		Label[] labels = new Label[WORD.length()];
 		for (int i = 0; i < labels.length; i++) {
@@ -121,6 +159,10 @@ public class GameState {
 		return labels;
 	}
 	
+	/**
+	 * Gets the Label(s) for all of the Characters in the Picking Area (background grey if guessed already)
+	 * @return Label[] of all Guessing Characters
+	 */
 	public Label[] getCharactersLeft() {
 		Label[] labels = new Label[26];
 		for (int i = 0; i<labels.length; i++) {

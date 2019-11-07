@@ -4,7 +4,11 @@ import javafx.scene.control.Label;
 import model.GameState;
 import view.App;
 import view.KeyboardView;
-
+/**
+ * Handles all user-game interaction in the form of setting up events and handling view elements.
+ * @author Dylan T. Downard
+ *
+ */
 public class GameController {
 
 	public GameState currentState;
@@ -24,11 +28,15 @@ public class GameController {
 		gameInProgress = true;
 	}
 
+	
 	private void setCharacterEvents() {
 		CharacterEvents.setLabelsEvents(charactersLeft);
 		CharacterEvents.setKeyEvents(App.scene);
 	}
 
+	/**
+	 * Main Driver for the program; updates all changing view elements.
+	 */
 	public void update() {
 		//TODO set up win/lose conditions
 		this.charactersLeft = currentState.getCharactersLeft();
@@ -42,6 +50,7 @@ public class GameController {
 		} else if (currentState.isGameWon()) {
 			//TODO
 			this.gameInProgress = false;
+			kViewCorrect.setKeys(currentState.getCharactersCorrectWin());
 		}	
 	}
 

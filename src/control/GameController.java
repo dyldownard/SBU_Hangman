@@ -1,5 +1,7 @@
 package control;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import model.GameState;
 import view.App;
@@ -26,6 +28,7 @@ public class GameController {
 		kViewLeft = new KeyboardView(charactersLeft);
 		kViewCorrect = new KeyboardView(charactersCorrect);
 		gameInProgress = true;
+		App.gBar.allowSave();
 	}
 
 	
@@ -44,13 +47,30 @@ public class GameController {
 		kViewLeft.setKeys(charactersLeft);
 		kViewCorrect.setKeys(charactersCorrect);
 		CharacterEvents.setLabelsEvents(charactersLeft);
+		App.remaining.setText("Guesses Remaining: " + (10 - currentState.getAmountWrong()));
+		
 		if (currentState.isGameLost()) {
+			App.gBar.disallowSave();
 			this.gameInProgress = false;
 			kViewCorrect.setKeys(currentState.getCharactersCorrectLoss());
+			Alert loss = new Alert(AlertType.WARNING);
+			loss.setTitle("Game over");
+			loss.setGraphic(null);
+			loss.setHeaderText("");
+			loss.setContentText("You have lost! The word was (" + currentState.getWord() + ")");
+			loss.showAndWait();
+			
 		} else if (currentState.isGameWon()) {
 			//TODO
+			App.gBar.disallowSave();
 			this.gameInProgress = false;
 			kViewCorrect.setKeys(currentState.getCharactersCorrectWin());
+			Alert won = new Alert(AlertType.INFORMATION);
+			won.setTitle("Game over");
+			won.setGraphic(null);
+			won.setHeaderText("");
+			won.setContentText("You have won! The word was (" + currentState.getWord() + ")");
+			won.showAndWait();
 		}	
 	}
 

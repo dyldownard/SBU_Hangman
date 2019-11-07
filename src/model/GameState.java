@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.rmi.UnexpectedException;
 
 import javafx.geometry.Pos;
@@ -14,7 +15,9 @@ import view.App;
  * @author Dylan T. Downard
  *
  */
-public class GameState {
+public class GameState implements Serializable{
+	
+	private static final long serialVersionUID = 3659372710625538391L;
 	
 	private String WORD;
 	private boolean[] charactersCorrect;
@@ -34,6 +37,7 @@ public class GameState {
 		int spot = getValue(C);
 		if (guessedCharacters[spot]==false) {
 			guessedCharacters[spot] = true;
+			App.gBar.allowSave();
 			//guessed character is available, see what the answer is
 			if (getOccurances(WORD, C) > 0) {
 				correct(C);
@@ -191,6 +195,12 @@ public class GameState {
 			}
 		}
 		return true;
+	}
+	public String getWord() {
+		return WORD;
+	}
+	public int getAmountWrong() {
+		return this.amountWrong;
 	}
 	
 }

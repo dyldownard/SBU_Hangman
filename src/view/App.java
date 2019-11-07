@@ -4,50 +4,45 @@ import control.GameController;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.GameState;
 
 public class App extends Application{
 
-	BorderPane pane;
+	BorderPane rootPane;
 	
+	public static Stage stage;
 	public static Scene scene;
-	
+	public static VBox vbox;
+	public static HBox hbox;
 	public static GameController gc;
-	
 	public static Hangman hangman;
-	GameBar gBar;
+	public static GameBar gBar;
+	public static Label remaining;
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-	
+		stage = primaryStage;
+		rootPane = new BorderPane();
+		scene = new Scene(rootPane, 600,400);
 		
-		pane = new BorderPane();
-		scene = new Scene(pane, 600,400);
-		gBar = new GameBar();
-		pane.setTop(gBar);
-		GameState gs = new GameState("Hello");
-		gc = new GameController(gs);
-		VBox vbox = new VBox();
-		hangman = new Hangman();
-		KeyboardView upper = gc.kViewCorrect;
-		KeyboardView kv = gc.kViewLeft;
 		
-		vbox.getChildren().addAll(upper,kv);
-		HBox hbox = new HBox();
-		hbox.setAlignment(Pos.CENTER);
+		vbox = new VBox();
+
 		vbox.setAlignment(Pos.CENTER);
 		vbox.setSpacing(50);
 		
-		hbox.getChildren().addAll(hangman,vbox);
+		hbox = new HBox();
+		hbox.setAlignment(Pos.CENTER);
+		rootPane.setCenter(hbox);
 		
-		pane.setCenter(hbox);
+		gBar = new GameBar();
+		rootPane.setTop(gBar);
 		
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Hangman");

@@ -59,7 +59,7 @@ public class GameState implements Serializable{
 	}
 	
 	
-	public void incorrect(char C) {
+	private void incorrect(char C) {
 		amountWrong++;
 		Hangman.hangman.advanceGame();
 		Hangman.gc.update();

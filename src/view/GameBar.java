@@ -20,7 +20,6 @@ public class GameBar extends Pane {
 	private ColorAdjust greyout;
 	private ColorAdjust norm;
 	
-	
 	public GameBar() {
 		super();
 		this.setStyle("-fx-background-color: #808080"); //background gray
@@ -96,6 +95,17 @@ public class GameBar extends Pane {
 	public void disallowSave() {
 		GameBarEvents.ableSave = false;
 		this.save.setEffect(greyout);
+	}
+	
+	public static void unhover(ImageView inst) {
+		ColorAdjust norm = new ColorAdjust();
+		norm.setBrightness(0);
+		inst.setEffect(norm);
+	}
+	public static void hover(ImageView inst) {
+		ColorAdjust hover = new ColorAdjust();
+		hover.setBrightness(0.5);
+		inst.setEffect(hover);
 	}
 
 }

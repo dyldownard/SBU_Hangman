@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import model.GameState;
+import view.GameBar;
 import view.Hangman;
 import view.HangmanView;
 import view.KeyboardView;
@@ -50,10 +51,14 @@ public final class GameBarEvents {
 	private static void setHover(ImageView... views) {
 		for (ImageView view : views) {
 			view.setOnMouseEntered(e -> {
-				view.setStyle("-fx-border-color: white");
+				if (view != views[1] || ableSave) {
+					GameBar.hover(view);
+				}
 			});
 			view.setOnMouseExited(e -> {
-				view.setStyle("-fx-border-color: none");
+				if (view != views[1] || ableSave) {
+					GameBar.unhover(view);
+				}
 			});
 		}
 	}

@@ -29,7 +29,7 @@ public class Hangman extends Application{
 		
 		stage = primaryStage;
 		rootPane = new BorderPane();
-		scene = new Scene(rootPane, 600,400);
+		scene = new Scene(rootPane, 700,500);
 		
 		
 		vbox = new VBox();

@@ -27,6 +27,7 @@ public class GameController {
 		setCharacterEvents();
 		kViewLeft = new KeyboardView(charactersLeft);
 		kViewCorrect = new KeyboardView(charactersCorrect);
+		kViewCorrect.fixWidth();
 		gameInProgress = true;
 		Hangman.gBar.allowSave();
 	}

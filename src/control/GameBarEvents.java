@@ -156,13 +156,15 @@ public final class GameBarEvents {
 				Hangman.hangman = new HangmanView();
 				KeyboardView upper = Hangman.gc.kViewCorrect;
 				KeyboardView kv = Hangman.gc.kViewLeft;
-				
+				for (int i = 0; i < Hangman.gc.currentState.getAmountWrong(); i++) {
+					Hangman.hangman.advanceGame();
+				}
 				Hangman.remaining = new Label();
 				Hangman.remaining.setText("Guesses Remaining: " + (10- Hangman.gc.currentState.getAmountWrong()));
 				
 				Hangman.vbox.getChildren().clear();
 				Hangman.hbox.getChildren().clear();
-				Hangman.vbox.getChildren().addAll(upper,kv);
+				Hangman.vbox.getChildren().addAll(Hangman.remaining, upper,kv);
 				Hangman.hbox.getChildren().addAll(Hangman.hangman,Hangman.vbox);
 				ois.close();
 				Hangman.gBar.disallowSave();

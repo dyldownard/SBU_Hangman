@@ -96,58 +96,16 @@ public final class GameBarEvents {
 				}
 			}
 			
-			
 			Button bt = new Button("Start Playing");
 			bt.setOnMouseClicked(e1 -> {
-				GameState gs;
-				try {
-					gs = new GameState(getRandomWord());
-				} catch (FileNotFoundException e2) {
-					System.out.println("hi");
-					gs = new GameState("Hello");
-				}
-				Hangman.gc = new GameController(gs);
-				Hangman.hangman = new HangmanView();
-				KeyboardView upper = Hangman.gc.kViewCorrect;
-				KeyboardView kv = Hangman.gc.kViewLeft;
-				Hangman.remaining = new Label();
-				Hangman.remaining.setText("Guesses Remaining: 10");
-				
-				Hangman.vbox.getChildren().clear();
-				Hangman.hbox.getChildren().clear();
-				Hangman.vbox.getChildren().addAll(Hangman.remaining, upper,kv);
-				VBox vb = new VBox(Hangman.hangman);
-				vb.setAlignment(Pos.CENTER);
-				Hangman.hbox.getChildren().addAll(vb,Hangman.vbox);
-				Hangman.rootPane.setCenter(Hangman.hbox);
+				Hangman.gc.setUpNew();
 			});
 			bt.setOnKeyPressed(e1 -> {
 				if (e1.getCode().equals(KeyCode.SPACE)) {
-					GameState gs;
-					try {
-						gs = new GameState(getRandomWord());
-					} catch (FileNotFoundException e2) {
-						System.out.println("hi");
-						gs = new GameState("Hello");
-					}
-					Hangman.gc = new GameController(gs);
-					Hangman.hangman = new HangmanView();
-					KeyboardView upper = Hangman.gc.kViewCorrect;
-					KeyboardView kv = Hangman.gc.kViewLeft;
-					Hangman.remaining = new Label();
-					Hangman.remaining.setText("Guesses Remaining: 10");
-					
-					Hangman.vbox.getChildren().clear();
-					Hangman.hbox.getChildren().clear();
-					Hangman.vbox.getChildren().addAll(Hangman.remaining, upper,kv);
-					VBox vb = new VBox(Hangman.hangman);
-					vb.setAlignment(Pos.CENTER);
-					Hangman.hbox.getChildren().addAll(vb,Hangman.vbox);
-					Hangman.rootPane.setCenter(Hangman.hbox);
+					Hangman.gc.setUpNew();
 				}
 			});
-			Hangman.rootPane.setCenter(bt);
-			
+			Hangman.rootPane.setCenter(bt);	
 		});
 	}
 	
@@ -212,53 +170,16 @@ public final class GameBarEvents {
 				ois.close();
 				Button bt = new Button("Start Playing");
 				bt.setOnMouseClicked(e1 -> {
-					Hangman.gc = new GameController(newGS);
-					Hangman.hangman = new HangmanView();
-					KeyboardView upper = Hangman.gc.kViewCorrect;
-					KeyboardView kv = Hangman.gc.kViewLeft;
-					for (int i = 0; i < Hangman.gc.currentState.getAmountWrong(); i++) {
-						Hangman.hangman.advanceGame();
-					}
-					Hangman.remaining = new Label();
-					Hangman.remaining.setText("Guesses Remaining: " + (10- Hangman.gc.currentState.getAmountWrong()));
-					
-					Hangman.vbox.getChildren().clear();
-					Hangman.hbox.getChildren().clear();
-					Hangman.vbox.getChildren().addAll(Hangman.remaining, upper,kv);
-					VBox vb = new VBox(Hangman.hangman);
-					vb.setAlignment(Pos.CENTER);
-					Hangman.hbox.getChildren().addAll(vb,Hangman.vbox);
-					Hangman.rootPane.setCenter(Hangman.hbox);
-					Hangman.gBar.disallowSave();
+					Hangman.gc.setUpLoad(newGS);
 				});
 				bt.setOnKeyPressed(e1 -> {
 					if (e1.getCode().equals(KeyCode.SPACE)) {
-						GameState gs;
-						try {
-							gs = new GameState(getRandomWord());
-						} catch (FileNotFoundException e2) {
-							System.out.println("hi");
-							gs = new GameState("Hello");
-						}
-						Hangman.gc = new GameController(gs);
-						Hangman.hangman = new HangmanView();
-						KeyboardView upper = Hangman.gc.kViewCorrect;
-						KeyboardView kv = Hangman.gc.kViewLeft;
-						Hangman.remaining = new Label();
-						Hangman.remaining.setText("Guesses Remaining: 10");
-						
-						Hangman.vbox.getChildren().clear();
-						Hangman.hbox.getChildren().clear();
-						Hangman.vbox.getChildren().addAll(Hangman.remaining, upper,kv);
-						VBox vb = new VBox(Hangman.hangman);
-						vb.setAlignment(Pos.CENTER);
-						Hangman.hbox.getChildren().addAll(vb,Hangman.vbox);
-						Hangman.rootPane.setCenter(Hangman.hbox);
+						Hangman.gc.setUpLoad(newGS);
 					}
 				});
 				Hangman.rootPane.setCenter(bt);
 				Hangman.gBar.disallowSave();
-			} catch (FileNotFoundException e1) {
+			} catch (FileNotFoundException e1s) {
 				System.out.println("exited filechooser");
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -302,19 +223,5 @@ public final class GameBarEvents {
 				System.exit(0);
 			}
 		});
-	}
-	
-	private static String getRandomWord() throws FileNotFoundException {
-		Scanner input = new Scanner(new File("src/resources/words.txt"));
-		String words = "";
-		while (input.hasNext()) {
-			words += input.next() + " ";
-		}
-		input.close();
-		String[] wordsAr = words.split(" ");
-		int rand = (int) (Math.random() * wordsAr.length);
-		
-		return wordsAr[rand];
-	}
-	
+	}	
 }

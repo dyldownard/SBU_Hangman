@@ -98,6 +98,27 @@ public class GameState implements Serializable{
 		}
 		return occ;
 	}
+	
+	public boolean isGameLost() {
+		return (amountWrong>=MAX_WRONG);
+	}
+	public boolean isGameWon() {
+		for (boolean b : charactersCorrect) {
+			if (!b) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public String getWord() {
+		return WORD;
+	}
+	
+	public int getAmountWrong() {
+		return this.amountWrong;
+	}
+	
 	/**
 	 * Gets the Label(s) for all of the Characters in the Word area
 	 * @return Label[] of the Guessed Correctly characters
@@ -183,24 +204,6 @@ public class GameState implements Serializable{
 			
 		}
 		return labels;
-	}
-	
-	public boolean isGameLost() {
-		return (amountWrong>=MAX_WRONG);
-	}
-	public boolean isGameWon() {
-		for (boolean b : charactersCorrect) {
-			if (!b) {
-				return false;
-			}
-		}
-		return true;
-	}
-	public String getWord() {
-		return WORD;
-	}
-	public int getAmountWrong() {
-		return this.amountWrong;
 	}
 	
 }

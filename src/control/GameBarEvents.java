@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -120,6 +121,31 @@ public final class GameBarEvents {
 				Hangman.hbox.getChildren().addAll(vb,Hangman.vbox);
 				Hangman.rootPane.setCenter(Hangman.hbox);
 			});
+			bt.setOnKeyPressed(e1 -> {
+				if (e1.getCode().equals(KeyCode.SPACE)) {
+					GameState gs;
+					try {
+						gs = new GameState(getRandomWord());
+					} catch (FileNotFoundException e2) {
+						System.out.println("hi");
+						gs = new GameState("Hello");
+					}
+					Hangman.gc = new GameController(gs);
+					Hangman.hangman = new HangmanView();
+					KeyboardView upper = Hangman.gc.kViewCorrect;
+					KeyboardView kv = Hangman.gc.kViewLeft;
+					Hangman.remaining = new Label();
+					Hangman.remaining.setText("Guesses Remaining: 10");
+					
+					Hangman.vbox.getChildren().clear();
+					Hangman.hbox.getChildren().clear();
+					Hangman.vbox.getChildren().addAll(Hangman.remaining, upper,kv);
+					VBox vb = new VBox(Hangman.hangman);
+					vb.setAlignment(Pos.CENTER);
+					Hangman.hbox.getChildren().addAll(vb,Hangman.vbox);
+					Hangman.rootPane.setCenter(Hangman.hbox);
+				}
+			});
 			Hangman.rootPane.setCenter(bt);
 			
 		});
@@ -204,6 +230,31 @@ public final class GameBarEvents {
 					Hangman.hbox.getChildren().addAll(vb,Hangman.vbox);
 					Hangman.rootPane.setCenter(Hangman.hbox);
 					Hangman.gBar.disallowSave();
+				});
+				bt.setOnKeyPressed(e1 -> {
+					if (e1.getCode().equals(KeyCode.SPACE)) {
+						GameState gs;
+						try {
+							gs = new GameState(getRandomWord());
+						} catch (FileNotFoundException e2) {
+							System.out.println("hi");
+							gs = new GameState("Hello");
+						}
+						Hangman.gc = new GameController(gs);
+						Hangman.hangman = new HangmanView();
+						KeyboardView upper = Hangman.gc.kViewCorrect;
+						KeyboardView kv = Hangman.gc.kViewLeft;
+						Hangman.remaining = new Label();
+						Hangman.remaining.setText("Guesses Remaining: 10");
+						
+						Hangman.vbox.getChildren().clear();
+						Hangman.hbox.getChildren().clear();
+						Hangman.vbox.getChildren().addAll(Hangman.remaining, upper,kv);
+						VBox vb = new VBox(Hangman.hangman);
+						vb.setAlignment(Pos.CENTER);
+						Hangman.hbox.getChildren().addAll(vb,Hangman.vbox);
+						Hangman.rootPane.setCenter(Hangman.hbox);
+					}
 				});
 				Hangman.rootPane.setCenter(bt);
 				Hangman.gBar.disallowSave();

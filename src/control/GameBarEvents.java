@@ -92,11 +92,11 @@ public final class GameBarEvents {
 			
 			Button bt = new Button("Start Playing");
 			bt.setOnMouseClicked(e1 -> {
-				Hangman.gc.setUpNew();
+				GameController.setUpNew();
 			});
 			bt.setOnKeyPressed(e1 -> {
 				if (e1.getCode().equals(KeyCode.SPACE)) {
-					Hangman.gc.setUpNew();
+					GameController.setUpNew();
 				}
 			});
 			Hangman.rootPane.setCenter(bt);	
@@ -164,11 +164,11 @@ public final class GameBarEvents {
 				ois.close();
 				Button bt = new Button("Start Playing");
 				bt.setOnMouseClicked(e1 -> {
-					Hangman.gc.setUpLoad(newGS);
+					GameController.setUpLoad(newGS);
 				});
 				bt.setOnKeyPressed(e1 -> {
 					if (e1.getCode().equals(KeyCode.SPACE)) {
-						Hangman.gc.setUpLoad(newGS);
+						GameController.setUpLoad(newGS);
 					}
 				});
 				Hangman.rootPane.setCenter(bt);

@@ -82,7 +82,7 @@ public class GameController {
 		}	
 	}
 	
-	public void setUpNew() {
+	public static void setUpNew() {
 		GameState gs;
 		try {
 			gs = new GameState(getRandomWord());
@@ -106,7 +106,7 @@ public class GameController {
 		Hangman.rootPane.setCenter(Hangman.hbox);
 	}
 	
-	public void setUpLoad(GameState newGS) {
+	public static void setUpLoad(GameState newGS) {
 		Hangman.gc = new GameController(newGS);
 		Hangman.hangman = new HangmanView();
 		KeyboardView upper = Hangman.gc.kViewCorrect;

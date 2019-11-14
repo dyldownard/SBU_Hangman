@@ -74,6 +74,19 @@ public final class GameBarEvents {
 					FileChooser fc = new FileChooser();
 					fc.getExtensionFilters().add(new ExtensionFilter("Hangman files (*.hng)", "*.hng"));
 					File hangFile = fc.showSaveDialog(Hangman.stage);
+					
+					if (!hangFile.getName().endsWith(".hng")) {
+						Alert saveError = new Alert(AlertType.WARNING, ".txt is not of extension .hng. Would you like to use .hng? File will not be saved otherwise.", ButtonType.NO, ButtonType.OK);
+						saveError.setTitle("Extension Warning");
+						saveAlert.setHeaderText("");
+						Optional<ButtonType> saveButtons = saveError.showAndWait();
+						if (saveButtons.get() == ButtonType.OK) {
+							String newURL = hangFile.getName();
+							int index = newURL.lastIndexOf(".");
+							newURL = newURL.substring(index, newURL.length());
+							hangFile = new File(newURL);
+						}
+					}
 					try {
 						ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
 						oos.writeObject(Hangman.gc.currentState);

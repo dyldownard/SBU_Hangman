@@ -4,7 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 
 public class KeyboardView extends FlowPane{
-	Label[] labs;
+	public Label[] labs;
 	
 	
 	public KeyboardView(Label[] newLabs) {
@@ -25,5 +25,5 @@ public class KeyboardView extends FlowPane{
 		this.getChildren().removeAll(this.getChildren());
 		this.getChildren().addAll(newLabs);
 	}
-	
+
 }

@@ -1,5 +1,6 @@
 package view;
 
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -31,6 +32,7 @@ public class HangmanView extends Pane{
 		this.setPrefSize(300, 300);
 		
 		base = new Line(32,260,268,260);
+		
 		pole = new Line(83,43,83,260);
 		ext = new Line(83,43,180,43);
 		hang = new Line(180,43,180,65);
@@ -49,6 +51,18 @@ public class HangmanView extends Pane{
 		
 		lleg1 = new Line(180,144,200,160);
 		lleg2 = new Line(200,160,210,180);
+		
+		Tooltip.install(head, new Tooltip("Head"));
+		Tooltip.install(torso, new Tooltip("Torso"));
+		Tooltip.install(rarm1, new Tooltip("RightArm(1)"));
+		Tooltip.install(rarm2, new Tooltip("RightArm(2)"));
+		Tooltip.install(larm1, new Tooltip("LeftArm(1)"));
+		Tooltip.install(larm2, new Tooltip("LeftArm(2)"));
+		Tooltip.install(rleg1, new Tooltip("RightLeg(1)"));
+		Tooltip.install(rleg2, new Tooltip("RightLeg(2)"));
+		Tooltip.install(lleg1, new Tooltip("LeftLeg1"));
+		Tooltip.install(lleg2, new Tooltip("LeftLeg2"));
+		
 		
 		this.setWidth(300);
 		this.setHeight(300);
@@ -84,10 +98,123 @@ public class HangmanView extends Pane{
 		count++;
 	}
 	
+	/**
+	 * Updates visibility of each part of the hangman based on the count, however
+	 * due to the positive-bound nature of count, is overkill for updating (see HangmanView.advanceGame())
+	 * Can still be used in order to update the view regardless on count stepping order
+	 */
+	@Deprecated
+	public void update() {
+		if (count >0) {
+			head.setVisible(true);
+		}else {
+			head.setVisible(false);
+			torso.setVisible(false);
+			rarm1.setVisible(false);
+			rarm2.setVisible(false);
+			larm1.setVisible(false);
+			larm2.setVisible(false);
+			rleg1.setVisible(false);
+			rleg2.setVisible(false);
+			lleg1.setVisible(false);
+			lleg2.setVisible(false);
+			return;
+		}
+		if (count >1) {
+			torso.setVisible(true);
+		}else {
+			torso.setVisible(false);
+			rarm1.setVisible(false);
+			rarm2.setVisible(false);
+			larm1.setVisible(false);
+			larm2.setVisible(false);
+			rleg1.setVisible(false);
+			rleg2.setVisible(false);
+			lleg1.setVisible(false);
+			lleg2.setVisible(false);
+			return;
+		}
+		if (count >2) {
+			rarm1.setVisible(true);
+		}else {
+			rarm1.setVisible(false);
+			rarm2.setVisible(false);
+			larm1.setVisible(false);
+			larm2.setVisible(false);
+			rleg1.setVisible(false);
+			rleg2.setVisible(false);
+			lleg1.setVisible(false);
+			lleg2.setVisible(false);
+			return;
+		}
+		if (count >3) {
+			rarm2.setVisible(true);
+		}else {
+			rarm2.setVisible(false);
+			larm1.setVisible(false);
+			larm2.setVisible(false);
+			rleg1.setVisible(false);
+			rleg2.setVisible(false);
+			lleg1.setVisible(false);
+			lleg2.setVisible(false);
+			return;
+		}
+		if (count >4) {
+			larm1.setVisible(true);
+		}else {
+			larm1.setVisible(false);
+			larm2.setVisible(false);
+			rleg1.setVisible(false);
+			rleg2.setVisible(false);
+			lleg1.setVisible(false);
+			lleg2.setVisible(false);
+			return;
+		}
+		if (count >5) {
+			larm2.setVisible(true);
+		}else {
+			larm2.setVisible(false);
+			rleg1.setVisible(false);
+			rleg2.setVisible(false);
+			lleg1.setVisible(false);
+			lleg2.setVisible(false);
+			return;
+		}
+		if (count >6) {
+			rleg1.setVisible(true);
+		}else {
+			rleg1.setVisible(false);
+			rleg2.setVisible(false);
+			lleg1.setVisible(false);
+			lleg2.setVisible(false);
+			return;
+		}
+		if (count >7) {
+			rleg2.setVisible(true);
+		}else {
+			rleg2.setVisible(false);
+			lleg1.setVisible(false);
+			lleg2.setVisible(false);
+			return;
+		}
+		if (count >8) {
+			lleg1.setVisible(true);
+		}else {
+			lleg1.setVisible(false);
+			lleg2.setVisible(false);
+			return;
+		}
+		if (count >9) {
+			lleg2.setVisible(true);
+		}else {
+			lleg2.setVisible(false);
+			return;
+		}
+	}
+	
 	public void reset() {
 		head.setVisible(false);
 		torso.setVisible(false);
-		
 		rarm1.setVisible(false);
 		rarm2.setVisible(false);
 		larm1.setVisible(false);

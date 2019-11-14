@@ -75,23 +75,32 @@ public final class GameBarEvents {
 					fc.getExtensionFilters().add(new ExtensionFilter("Hangman files (*.hng)", "*.hng"));
 					File hangFile = fc.showSaveDialog(Hangman.stage);
 					
-					if (!hangFile.getName().endsWith(".hng")) {
-						Alert saveError = new Alert(AlertType.WARNING, ".txt is not of extension .hng. Would you like to use .hng? File will not be saved otherwise.", ButtonType.NO, ButtonType.OK);
-						saveError.setTitle("Extension Warning");
-						saveAlert.setHeaderText("");
-						Optional<ButtonType> saveButtons = saveError.showAndWait();
-						if (saveButtons.get() == ButtonType.OK) {
-							String newURL = hangFile.getName();
-							int index = newURL.lastIndexOf(".");
-							newURL = newURL.substring(index, newURL.length());
-							hangFile = new File(newURL);
-						}
-					}
+					
 					try {
-						ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
-						oos.writeObject(Hangman.gc.currentState);
-						oos.close();
-						Hangman.gBar.disallowSave();
+						if (!hangFile.getName().endsWith(".hng")) {
+							Alert saveError = new Alert(AlertType.WARNING, "Extension is not of extension .hng. Would you like to use .hng? File will not be saved otherwise.", ButtonType.NO, ButtonType.OK);
+							saveError.setTitle("Extension Warning");
+							saveError.setHeaderText("");
+							Optional<ButtonType> saveButtons = saveError.showAndWait();
+							if (saveButtons.get() == ButtonType.OK) {
+								String newURL = hangFile.getAbsolutePath();
+								int index = newURL.lastIndexOf(".");
+								newURL = newURL.substring(0, index);
+								newURL += ".hng";
+								hangFile = new File(newURL);
+								ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
+								oos.writeObject(Hangman.gc.currentState);
+								oos.close();
+								Hangman.gBar.disallowSave();
+							}else if (saveButtons.get() == ButtonType.NO) {
+								return;
+							}
+						}else {
+							ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
+							oos.writeObject(Hangman.gc.currentState);
+							oos.close();
+							Hangman.gBar.disallowSave();
+						}
 					} catch (FileNotFoundException e1) {
 						System.out.println("exited filechooser");
 					} catch (IOException e1) {
@@ -123,10 +132,30 @@ public final class GameBarEvents {
 				fc.getExtensionFilters().add(new ExtensionFilter("Hangman files (*.hng)", "*.hng"));
 				File hangFile = fc.showSaveDialog(Hangman.stage);
 				try {
-					ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
-					oos.writeObject(Hangman.gc.currentState);
-					oos.close();
-					Hangman.gBar.disallowSave();
+					if (!hangFile.getName().endsWith(".hng")) {
+						Alert saveError = new Alert(AlertType.WARNING, "Extension is not of extension .hng. Would you like to use .hng? File will not be saved otherwise.", ButtonType.NO, ButtonType.OK);
+						saveError.setTitle("Extension Warning");
+						saveError.setHeaderText("");
+						Optional<ButtonType> saveButtons = saveError.showAndWait();
+						if (saveButtons.get() == ButtonType.OK) {
+							String newURL = hangFile.getAbsolutePath();
+							int index = newURL.lastIndexOf(".");
+							newURL = newURL.substring(0, index);
+							newURL += ".hng";
+							hangFile = new File(newURL);
+							ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
+							oos.writeObject(Hangman.gc.currentState);
+							oos.close();
+							Hangman.gBar.disallowSave();
+						}else if (saveButtons.get() == ButtonType.NO) {
+							return;
+						}
+					}else {
+						ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
+						oos.writeObject(Hangman.gc.currentState);
+						oos.close();
+						Hangman.gBar.disallowSave();
+					}
 				} catch (FileNotFoundException e1) {
 					System.out.println("exited filechooser");
 				} catch (IOException e1) {
@@ -151,10 +180,30 @@ public final class GameBarEvents {
 					fc.getExtensionFilters().add(new ExtensionFilter("Hangman files (*.hng)", "*.hng"));
 					File hangFile = fc.showSaveDialog(Hangman.stage);
 					try {
-						ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
-						oos.writeObject(Hangman.gc.currentState);
-						oos.close();
-						Hangman.gBar.disallowSave();
+						if (!hangFile.getName().endsWith(".hng")) {
+							Alert saveError = new Alert(AlertType.WARNING, "Extension is not of extension .hng. Would you like to use .hng? File will not be saved otherwise.", ButtonType.NO, ButtonType.OK);
+							saveError.setTitle("Extension Warning");
+							saveError.setHeaderText("");
+							Optional<ButtonType> saveButtons = saveError.showAndWait();
+							if (saveButtons.get() == ButtonType.OK) {
+								String newURL = hangFile.getAbsolutePath();
+								int index = newURL.lastIndexOf(".");
+								newURL = newURL.substring(0, index);
+								newURL += ".hng";
+								hangFile = new File(newURL);
+								ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
+								oos.writeObject(Hangman.gc.currentState);
+								oos.close();
+								Hangman.gBar.disallowSave();
+							}else if (saveButtons.get() == ButtonType.NO) {
+								return;
+							}
+						}else {
+							ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
+							oos.writeObject(Hangman.gc.currentState);
+							oos.close();
+							Hangman.gBar.disallowSave();
+						}
 					} catch (FileNotFoundException e1) {
 						System.out.println("exited filechooser");
 					} catch (IOException e1) {
@@ -210,10 +259,30 @@ public final class GameBarEvents {
 					fc.getExtensionFilters().add(new ExtensionFilter("Hangman files (*.hng)", "*.hng"));
 					File hangFile = fc.showSaveDialog(Hangman.stage);
 					try {
-						ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
-						oos.writeObject(Hangman.gc.currentState);
-						oos.close();
-						Hangman.gBar.disallowSave();
+						if (!hangFile.getName().endsWith(".hng")) {
+							Alert saveError = new Alert(AlertType.WARNING, "Extension is not of extension .hng. Would you like to use .hng? File will not be saved otherwise.", ButtonType.NO, ButtonType.OK);
+							saveError.setTitle("Extension Warning");
+							saveError.setHeaderText("");
+							Optional<ButtonType> saveButtons = saveError.showAndWait();
+							if (saveButtons.get() == ButtonType.OK) {
+								String newURL = hangFile.getAbsolutePath();
+								int index = newURL.lastIndexOf(".");
+								newURL = newURL.substring(0, index);
+								newURL += ".hng";
+								hangFile = new File(newURL);
+								ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
+								oos.writeObject(Hangman.gc.currentState);
+								oos.close();
+								Hangman.gBar.disallowSave();
+							}else if (saveButtons.get() == ButtonType.NO) {
+								return;
+							}
+						}else {
+							ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
+							oos.writeObject(Hangman.gc.currentState);
+							oos.close();
+							Hangman.gBar.disallowSave();
+						}
 					} catch (FileNotFoundException e1) {
 						System.out.println("exited filechooser");
 					} catch (IOException e1) {

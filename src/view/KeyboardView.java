@@ -24,6 +24,7 @@ public class KeyboardView extends FlowPane{
 	public void setKeys(Label[] newLabs) {
 		this.getChildren().removeAll(this.getChildren());
 		this.getChildren().addAll(newLabs);
+		labs = newLabs;
 	}
 
 }

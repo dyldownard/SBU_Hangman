@@ -55,7 +55,9 @@ public class GameController {
 		this.charactersCorrect = currentState.getCharactersCorrect();
 		kViewLeft.setKeys(charactersLeft);
 		kViewCorrect.setKeys(charactersCorrect);
+		
 		CharacterEvents.setLabelsEvents(charactersLeft);
+		KeyboardViewEvents.setKeyboardHover(kViewLeft);
 		Hangman.remaining.setText("Guesses Remaining: " + (10 - currentState.getAmountWrong()));
 		
 		if (currentState.isGameLost()) {

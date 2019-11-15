@@ -9,10 +9,11 @@ public class KeyboardViewEvents {
 	public static void setKeyboardHover(KeyboardView key) {
 		for (Label lab : key.labs) {
 			lab.setOnMouseEntered(e -> {
+				if (lab.getBackground()==null) {
 				ColorAdjust hover = new ColorAdjust();
 				hover.setBrightness(0.5);
 				lab.setEffect(hover);
-				//TODO fix border color issue
+				}
 			});
 			lab.setOnMouseExited(e -> {
 				ColorAdjust norm = new ColorAdjust();

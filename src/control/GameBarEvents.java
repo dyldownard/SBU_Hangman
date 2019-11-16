@@ -199,6 +199,7 @@ public final class GameBarEvents {
 								return;
 							}
 						}else {
+							
 							ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(hangFile));
 							oos.writeObject(Hangman.gc.currentState);
 							oos.close();
@@ -220,6 +221,16 @@ public final class GameBarEvents {
 			fc.getExtensionFilters().add(new ExtensionFilter("Hangman files (*.hng)", "*.hng"));
 			File hangFile = fc.showOpenDialog(Hangman.stage);
 			try {
+				if (!hangFile.getAbsolutePath().endsWith(".hng")) {
+					Alert loadAlert = new Alert(AlertType.WARNING, "File attempted to load is not of type .hng. Please select a .hng file.", ButtonType.CANCEL);
+					loadAlert.setTitle("Incorrect File Extension");
+					loadAlert.setHeaderText("");
+					Optional<ButtonType> buttons = loadAlert.showAndWait();
+					if (buttons.get() == ButtonType.CANCEL) {
+						return;
+					}
+					return;
+				}
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(hangFile));
 				
 				GameState newGS = (GameState) ois.readObject();
